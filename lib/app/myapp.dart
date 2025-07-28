@@ -9,7 +9,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
      routes: RouteManger.route,
-     initialRoute:RouteName.homeScreen,
+     initialRoute:RouteName.mainScreen,
     );
   }
 }

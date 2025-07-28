@@ -11,4 +11,7 @@ class ImageName {
   static String laundry = "assets/catogery/Laundry.png";
   static String milkEgg = "assets/catogery/Milk & egg.png";
   static String vegetables = "assets/catogery/Vegetables.png";
+  static String banana = "assets/fruits/banana.png";
+  static String pepper = "assets/fruits/Pepper.png";
+  static String orange = "assets/fruits/Orange.png";
 }

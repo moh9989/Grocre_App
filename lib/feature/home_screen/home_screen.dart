@@ -1,10 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:grocre_app/core/resourses/color_manger.dart';
 import 'package:grocre_app/core/resourses/image_name_manger.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:grocre_app/core/resourses/size_app_manger.dart';
 import 'package:grocre_app/core/resourses/text_manger.dart';
+import 'package:grocre_app/feature/home_screen/Widget/custom_item.dart';
 import 'package:grocre_app/model/catogery_model.dart';
+import 'package:grocre_app/model/item_model.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -19,7 +22,44 @@ class _HomeScreenState extends State<HomeScreen> {
     ImageName.banner2,
     ImageName.banner3,
   ];
-
+  List<ItemModel> itemPro = [
+    ItemModel(
+      image: ImageName.banana,
+      name: TextManger.banana,
+      price: "3.99",
+      rate: "4.8",
+    ),
+    ItemModel(
+      image: ImageName.pepper,
+      name: TextManger.pepper,
+      price: "2.99",
+      rate: "4.8",
+    ),
+    ItemModel(
+      image: ImageName.orange,
+      name: TextManger.orange,
+      price: "1.55",
+      rate: "5.5",
+    ),
+    ItemModel(
+      image: ImageName.banana,
+      name: TextManger.banana,
+      price: "3.99",
+      rate: "4.8",
+    ),
+    ItemModel(
+      image: ImageName.pepper,
+      name: TextManger.pepper,
+      price: "2.99",
+      rate: "4.8",
+    ),
+    ItemModel(
+      image: ImageName.orange,
+      name: TextManger.orange,
+      price: "1.55",
+      rate: "5.5",
+    ),
+  ];
   List<CatogeryModel> catogrey = [
     CatogeryModel(name: TextManger.fruits, image: ImageName.fruits),
     CatogeryModel(name: TextManger.milkEgg, image: ImageName.milkEgg),
@@ -30,6 +70,7 @@ class _HomeScreenState extends State<HomeScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      //appbar
       appBar: AppBar(
         leading: SizedBox.shrink(),
         leadingWidth: 0,
@@ -59,9 +100,10 @@ class _HomeScreenState extends State<HomeScreen> {
           ],
         ),
       ),
-
-      body: Column(
+      //CarouselSliderList
+      body: ListView(
         children: [
+          //CarouselSliderList
           CarouselSlider.builder(
             itemCount: bannerItem.length,
             itemBuilder:
@@ -82,6 +124,7 @@ class _HomeScreenState extends State<HomeScreen> {
               enlargeFactor: .3,
             ),
           ),
+          //catogoryList
           SizedBox(
             height: HeightSize.height105,
             child: ListView.separated(
@@ -94,7 +137,7 @@ class _HomeScreenState extends State<HomeScreen> {
                       width: WidthSize.width70,
                       height: HeightSize.height70,
                       decoration: BoxDecoration(
-                        color: Colors.grey.shade100,
+                        color: ColorManger.grey100Color,
                         shape: BoxShape.circle,
                         // borderRadius: BorderRadius.circular(50),
                       ),
@@ -128,12 +171,50 @@ class _HomeScreenState extends State<HomeScreen> {
               itemCount: catogrey.length,
             ),
           ),
-          SizedBox(height: HeightSize.height17),
-          Row(children: [
-
-
-
-       ],),
+          SizedBox(height: HeightSize.height20),
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  TextManger.fruits,
+                  style: TextStyle(
+                    fontSize: FontSize.fontSize16,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+                Text(
+                  TextManger.seeAll,
+                  style: TextStyle(
+                    color: ColorManger.primaryColor,
+                    fontSize: FontSize.fontSize14,
+                    fontWeight: FontWeight.bold,
+                  ),
+                ),
+              ],
+            ),
+          ),
+          SizedBox(height: HeightSize.height20),
+          //item
+          SingleChildScrollView(
+            scrollDirection: Axis.horizontal,
+            child: Row(
+              children: List.generate(itemPro.length, (index) {
+                final item = itemPro[index];
+                return Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                  child: CustomItem(
+                    name: item.name,
+                    image: item.image,
+                    price: item.price,
+                    rate: item.rate,
+                  ),
+                );
+              }),
+            ),
+          ),
+          SizedBox(height: HeightSize.height20),
         ],
       ),
     );

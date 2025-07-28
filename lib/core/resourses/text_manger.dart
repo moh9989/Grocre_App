@@ -5,6 +5,8 @@ class TextManger {
   static String laundry = "Laundry";
   static String milkEgg = "Milk & egg";
   static String vegetables = "Vegetables";
-    static String seeAll = "See all";
-
+  static String seeAll = "See all";
+  static String banana = "banana";
+  static String orange = "Orange";
+  static String pepper = "Pepper";
 }

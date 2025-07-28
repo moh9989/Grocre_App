@@ -10,6 +10,8 @@ class WidthSize {
 class HeightSize {
   static double height12 = 12;
   static double height17 = 17;
+    static double height20 = 20;
+
   static double height18_5 = 18.5;
   static double height43 = 43;
   static double height70 = 70;
@@ -19,5 +21,7 @@ class HeightSize {
 
 class FontSize {
   static double fontSize12 = 12;
+    static double fontSize14 = 14;
+  static double fontSize16 = 16;
   static double fontSize19 = 19;
 }
