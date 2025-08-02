@@ -8,11 +8,14 @@ class CustomItem extends StatelessWidget {
     required this.image,
     required this.price,
     required this.rate,
+    required this.icon, required this.ontap,
   });
   final String name;
   final String image;
   final String price;
   final String rate;
+  final Widget icon;
+  final VoidCallback ontap;
 
   @override
   Widget build(BuildContext context) {
@@ -37,7 +40,7 @@ class CustomItem extends StatelessWidget {
                   color: Colors.white.withOpacity(1),
                   shape: BoxShape.circle,
                 ),
-                child: IconButton(onPressed: () {}, icon: Icon(Icons.add)),
+                child: icon,
               ),
             ),
           ],

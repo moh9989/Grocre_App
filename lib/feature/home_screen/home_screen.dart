@@ -1,12 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:grocre_app/core/resourses/color_manger.dart';
+import 'package:grocre_app/core/resourses/content.dart';
 import 'package:grocre_app/core/resourses/image_name_manger.dart';
 import 'package:carousel_slider/carousel_slider.dart';
 import 'package:grocre_app/core/resourses/size_app_manger.dart';
 import 'package:grocre_app/core/resourses/text_manger.dart';
+import 'package:grocre_app/feature/home_screen/Widget/cistom_catogry_list.dart';
+import 'package:grocre_app/feature/home_screen/Widget/custom%20_row_details.dart';
+import 'package:grocre_app/feature/home_screen/Widget/custom_davinder.dart';
 import 'package:grocre_app/feature/home_screen/Widget/custom_item.dart';
-import 'package:grocre_app/model/catogery_model.dart';
+import 'package:grocre_app/feature/home_screen/Widget/custom_selecte_item.dart';
 import 'package:grocre_app/model/item_model.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -17,56 +21,19 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
-  List<String> bannerItem = [
-    ImageName.banner1,
-    ImageName.banner2,
-    ImageName.banner3,
-  ];
-  List<ItemModel> itemPro = [
-    ItemModel(
-      image: ImageName.banana,
-      name: TextManger.banana,
-      price: "3.99",
-      rate: "4.8",
-    ),
-    ItemModel(
-      image: ImageName.pepper,
-      name: TextManger.pepper,
-      price: "2.99",
-      rate: "4.8",
-    ),
-    ItemModel(
-      image: ImageName.orange,
-      name: TextManger.orange,
-      price: "1.55",
-      rate: "5.5",
-    ),
-    ItemModel(
-      image: ImageName.banana,
-      name: TextManger.banana,
-      price: "3.99",
-      rate: "4.8",
-    ),
-    ItemModel(
-      image: ImageName.pepper,
-      name: TextManger.pepper,
-      price: "2.99",
-      rate: "4.8",
-    ),
-    ItemModel(
-      image: ImageName.orange,
-      name: TextManger.orange,
-      price: "1.55",
-      rate: "5.5",
-    ),
-  ];
-  List<CatogeryModel> catogrey = [
-    CatogeryModel(name: TextManger.fruits, image: ImageName.fruits),
-    CatogeryModel(name: TextManger.milkEgg, image: ImageName.milkEgg),
-    CatogeryModel(name: TextManger.beverages, image: ImageName.beverages),
-    CatogeryModel(name: TextManger.laundry, image: ImageName.laundry),
-    CatogeryModel(name: TextManger.vegetables, image: ImageName.vegetables),
-  ];
+  List basketList = [];
+
+  void addAndRemove(ItemModel itemModel) {
+    setState(() {
+      if (basketList.contains(itemModel)) {
+        basketList.remove(itemModel);
+      } else {
+        basketList.add(itemModel);
+      }
+    });
+  }
+
+  bool isSelected(ItemModel itemModel) => basketList.contains(itemModel);
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -105,10 +72,10 @@ class _HomeScreenState extends State<HomeScreen> {
         children: [
           //CarouselSliderList
           CarouselSlider.builder(
-            itemCount: bannerItem.length,
+            itemCount: Content.bannerItem.length,
             itemBuilder:
                 (BuildContext context, int itemIndex, int pageViewIndex) =>
-                    Image.asset(bannerItem[itemIndex]),
+                    Image.asset(Content.bannerItem[itemIndex]),
             options: CarouselOptions(
               height: HeightSize.height222,
               // aspectRatio: 16 / 9,
@@ -131,80 +98,39 @@ class _HomeScreenState extends State<HomeScreen> {
               scrollDirection: Axis.horizontal,
               itemBuilder: (context, index) => Padding(
                 padding: const EdgeInsets.symmetric(horizontal: 10.0),
-                child: Column(
-                  children: [
-                    Container(
-                      width: WidthSize.width70,
-                      height: HeightSize.height70,
-                      decoration: BoxDecoration(
-                        color: ColorManger.grey100Color,
-                        shape: BoxShape.circle,
-                        // borderRadius: BorderRadius.circular(50),
-                      ),
-                      child: Image.asset(
-                        catogrey[index].image,
-                        width: WidthSize.width43,
-                        height: HeightSize.height43,
-                        //fit: BoxFit.fill,
-                      ),
-                    ),
-                    SizedBox(height: HeightSize.height12),
-                    SizedBox(
-                      width: WidthSize.width70,
-                      child: Text(
-                        catogrey[index].name,
-                        style: TextStyle(
-                          fontSize: FontSize.fontSize12,
-                          fontWeight: FontWeight.bold,
-                        ),
-                        overflow: TextOverflow.ellipsis,
-                        maxLines: 1,
-                        //overflow: TextOverflow.ellipsis,
-                        // softWrap: false,
-                      ),
-                    ),
-                  ],
+                child: CistomCatogryList(
+                  image: Content.catogrey[index].image,
+                  name: Content.catogrey[index].name,
                 ),
               ),
               separatorBuilder: (context, index) =>
                   SizedBox(width: WidthSize.width10),
-              itemCount: catogrey.length,
+              itemCount: Content.catogrey.length,
             ),
           ),
           SizedBox(height: HeightSize.height20),
           Padding(
             padding: const EdgeInsets.symmetric(horizontal: 10.0),
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Text(
-                  TextManger.fruits,
-                  style: TextStyle(
-                    fontSize: FontSize.fontSize16,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-                Text(
-                  TextManger.seeAll,
-                  style: TextStyle(
-                    color: ColorManger.primaryColor,
-                    fontSize: FontSize.fontSize14,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
+            child: CustomRowDetails(),
           ),
           SizedBox(height: HeightSize.height20),
           //item
           SingleChildScrollView(
             scrollDirection: Axis.horizontal,
             child: Row(
-              children: List.generate(itemPro.length, (index) {
-                final item = itemPro[index];
+              children: List.generate(Content.itemPro.length, (index) {
+                final item = Content.itemPro[index];
                 return Padding(
                   padding: const EdgeInsets.symmetric(horizontal: 10.0),
                   child: CustomItem(
+                    ontap: () {},
+                   
+                    icon: IconButton(
+                      onPressed: () {
+                     
+                      },
+                      icon: Icon(Icons.add),
+                    ),
                     name: item.name,
                     image: item.image,
                     price: item.price,
@@ -214,9 +140,63 @@ class _HomeScreenState extends State<HomeScreen> {
               }),
             ),
           ),
+
+          Padding(
+            padding: const EdgeInsets.symmetric(horizontal: 10.0),
+            child: Container(
+              decoration: BoxDecoration(
+                color: ColorManger.primaryColor,
+                borderRadius: BorderRadius.circular(15),
+              ),
+              width: double.infinity,
+              height: HeightSize.height105,
+              child: Row(
+                children: [
+                  SizedBox(
+                    width: WidthSize.width100,
+                    child: Padding(
+                      padding: const EdgeInsets.symmetric(horizontal: 10.0),
+                      child: ListView.separated(
+                        scrollDirection: Axis.horizontal,
+                        itemBuilder: (context, index) => CustomSelecteItem(
+                          image: Content.itemPro[index].image,
+                        ),
+                        separatorBuilder: (context, index) =>
+                            SizedBox(width: WidthSize.width6),
+                        itemCount: 5,
+                      ),
+                    ),
+                  ),
+                  Spacer(),
+                 CustomDavinder(),
+                  SizedBox(width: WidthSize.width6),
+                  Text("View Basket"),
+                  SizedBox(width: WidthSize.width6),
+
+                  SvgPicture.asset(
+                    ImageName.basketIcon,
+                    width: WidthSize.width18_5,
+                    height: HeightSize.height18_5,
+                    color: Colors.white,
+                  ),
+                  Spacer(),
+                ],
+              ),
+            ),
+          ),
+
+        
           SizedBox(height: HeightSize.height20),
         ],
       ),
+
     );
   }
 }
+
+
+
+
+
+
+                              
