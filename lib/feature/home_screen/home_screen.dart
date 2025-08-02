@@ -149,11 +149,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 borderRadius: BorderRadius.circular(15),
               ),
               width: double.infinity,
-              height: HeightSize.height105,
+              height: HeightSize.height70,
               child: Row(
                 children: [
                   SizedBox(
-                    width: WidthSize.width100,
+                    width: WidthSize.width180,
                     child: Padding(
                       padding: const EdgeInsets.symmetric(horizontal: 10.0),
                       child: ListView.separated(
@@ -170,7 +170,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   Spacer(),
                  CustomDavinder(),
                   SizedBox(width: WidthSize.width6),
-                  Text("View Basket"),
+                  Text("View Basket",style: TextStyle(color: Colors.white),),
                   SizedBox(width: WidthSize.width6),
 
                   SvgPicture.asset(

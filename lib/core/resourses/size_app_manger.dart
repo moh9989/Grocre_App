@@ -5,7 +5,8 @@ class WidthSize {
   static double width18_5 = 18.5;
   static double width43 = 43;
   static double width70 = 70;
-    static double width100= 100;
+        static double width180= 180;
+
 
 }
 
